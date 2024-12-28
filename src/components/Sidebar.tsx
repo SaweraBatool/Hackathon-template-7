@@ -11,6 +11,12 @@ const Sidebar = () => {
   // State for price slider
   const [priceRange, setPriceRange] = useState(100);
 
+  // State for pick-up and drop-off dates and times
+  const [pickUpDate, setPickUpDate] = useState("");
+  const [pickUpTime, setPickUpTime] = useState("");
+  const [dropOffDate, setDropOffDate] = useState("");
+  const [dropOffTime, setDropOffTime] = useState("");
+
   // Generic function to handle checkbox changes
   const handleCheckboxChange = (
     option: string,
@@ -114,6 +120,43 @@ const Sidebar = () => {
             Max. ${priceRange}.00 {/* Display dynamic price range */}
           </span>
         </div>
+      </div>
+
+      {/* Pick-Up and Drop-Off Date and Time Section */}
+      <div className="mb-6">
+        <h3 className="mb-4 text-sm font-semibold text-gray-400">Pick-Up and Drop-Off</h3>
+
+        {/* Pick-Up Date */}
+        <input
+          type="date"
+          value={pickUpDate}
+          onChange={(e) => setPickUpDate(e.target.value)}
+          className="w-full mt-2"
+        />
+        
+        {/* Pick-Up Time */}
+        <input
+          type="time"
+          value={pickUpTime}
+          onChange={(e) => setPickUpTime(e.target.value)}
+          className="w-full mt-2"
+        />
+        
+        {/* Drop-Off Date */}
+        <input
+          type="date"
+          value={dropOffDate}
+          onChange={(e) => setDropOffDate(e.target.value)}
+          className="w-full mt-2"
+        />
+
+        {/* Drop-Off Time */}
+        <input
+          type="time"
+          value={dropOffTime}
+          onChange={(e) => setDropOffTime(e.target.value)}
+          className="w-full mt-2"
+        />
       </div>
     </div>
   );
