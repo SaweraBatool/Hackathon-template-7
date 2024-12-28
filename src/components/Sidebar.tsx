@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Sidebar = () => {
-  // States for checkboxes
-  const [selectedTypes, setSelectedTypes] = useState(["Sport", "SUV"]);
-  const [selectedCapacity, setSelectedCapacity] = useState([
-    "2 Person",
-    "8 or More",
-  ]);
+  // Options data
+  const typeOptions = [
+    { label: "Sport", count: 10 },
+    { label: "SUV", count: 12 },
+    { label: "MPV", count: 16 },
+    { label: "Sedan", count: 20 },
+    { label: "Coupe", count: 14 },
+    { label: "Hatchback", count: 14 },
+  ];
 
-  // State for price slider
-  const [priceRange, setPriceRange] = useState(100);
+  const capacityOptions = [
+    { label: "2 Person", count: 10 },
+    { label: "4 Person", count: 14 },
+    { label: "6 Person", count: 12 },
+    { label: "8 or More", count: 16 },
+  ];
 
-  // State for pick-up and drop-off dates and times
-  const [pickUpDate, setPickUpDate] = useState("");
-  const [pickUpTime, setPickUpTime] = useState("");
-  const [dropOffDate, setDropOffDate] = useState("");
-  const [dropOffTime, setDropOffTime] = useState("");
+  const handleCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`${e.target.name} selected: ${e.target.checked}`);
+  };
 
-  // Generic function to handle checkbox changes
-  const handleCheckboxChange = (
-    option: string,
-    selectedOptions: string[],
-    setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    setSelectedOptions((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option]
-    );
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const priceDisplay = document.getElementById("priceDisplay");
+    if (priceDisplay) {
+      priceDisplay.textContent = `Max. $${e.target.value}.00`;
+    }
   };
 
   return (
@@ -36,33 +35,17 @@ const Sidebar = () => {
       <div className="mb-6">
         <h3 className="mb-4 text-sm font-semibold text-gray-400">Type</h3>
         <ul>
-          {[
-            { label: "Sport", count: 10 },
-            { label: "SUV", count: 12 },
-            { label: "MPV", count: 16 },
-            { label: "Sedan", count: 20 },
-            { label: "Coupe", count: 14 },
-            { label: "Hatchback", count: 14 },
-          ].map((option) => (
+          {typeOptions.map((option) => (
             <li key={option.label} className="flex items-center mb-3">
               <input
                 type="checkbox"
-                id={option.label}
-                checked={selectedTypes.includes(option.label)}
-                onChange={() =>
-                  handleCheckboxChange(option.label, selectedTypes, setSelectedTypes)
-                }
+                name={option.label}
+                onChange={handleCheckboxClick}
                 className="mr-3 w-5 h-5 accent-blue-500"
               />
-              <label
-                htmlFor={option.label}
-                className="space-y-4 text-xl font-semibold text-gray-500"
-              >
-                <span>{option.label}</span>
-                <span className="text-xl font-semibold text-gray-400">
-                  {" "}
-                  ({option.count})
-                </span>
+              <label className="text-xl font-semibold text-gray-500">
+                {option.label}{" "}
+                <span className="text-gray-400">({option.count})</span>
               </label>
             </li>
           ))}
@@ -73,31 +56,17 @@ const Sidebar = () => {
       <div className="mb-6">
         <h3 className="mb-4 text-sm font-semibold text-gray-400">Category</h3>
         <ul>
-          {[
-            { label: "2 Person", count: 10 },
-            { label: "4 Person", count: 14 },
-            { label: "6 Person", count: 12 },
-            { label: "8 or More", count: 16 },
-          ].map((option) => (
+          {capacityOptions.map((option) => (
             <li key={option.label} className="flex items-center mb-3">
               <input
                 type="checkbox"
-                id={option.label}
-                checked={selectedCapacity.includes(option.label)}
-                onChange={() =>
-                  handleCheckboxChange(option.label, selectedCapacity, setSelectedCapacity)
-                }
+                name={option.label}
+                onChange={handleCheckboxClick}
                 className="mr-3 w-5 h-5 accent-blue-500"
               />
-              <label
-                htmlFor={option.label}
-                className="space-y-4 text-xl font-semibold text-gray-500"
-              >
-                <span>{option.label}</span>
-                <span className="text-xl font-semibold text-gray-400">
-                  {" "}
-                  ({option.count})
-                </span>
+              <label className="text-xl font-semibold text-gray-500">
+                {option.label}{" "}
+                <span className="text-gray-400">({option.count})</span>
               </label>
             </li>
           ))}
@@ -111,52 +80,18 @@ const Sidebar = () => {
           type="range"
           min="0"
           max="150"
-          value={priceRange} // Use priceRange state
-          onChange={(e) => setPriceRange(Number(e.target.value))}
+          defaultValue="100"
+          onChange={handlePriceChange}
           className="w-full accent-blue-500"
         />
         <div className="flex justify-between items-center mb-4">
-          <span className="space-y-4 text-xl font-semibold text-gray-500">
-            Max. ${priceRange}.00 {/* Display dynamic price range */}
+          <span
+            id="priceDisplay"
+            className="text-xl font-semibold text-gray-500"
+          >
+            Max. $100.00
           </span>
         </div>
-      </div>
-
-      {/* Pick-Up and Drop-Off Date and Time Section */}
-      <div className="mb-6">
-        <h3 className="mb-4 text-sm font-semibold text-gray-400">Pick-Up and Drop-Off</h3>
-
-        {/* Pick-Up Date */}
-        <input
-          type="date"
-          value={pickUpDate}
-          onChange={(e) => setPickUpDate(e.target.value)}
-          className="w-full mt-2"
-        />
-        
-        {/* Pick-Up Time */}
-        <input
-          type="time"
-          value={pickUpTime}
-          onChange={(e) => setPickUpTime(e.target.value)}
-          className="w-full mt-2"
-        />
-        
-        {/* Drop-Off Date */}
-        <input
-          type="date"
-          value={dropOffDate}
-          onChange={(e) => setDropOffDate(e.target.value)}
-          className="w-full mt-2"
-        />
-
-        {/* Drop-Off Time */}
-        <input
-          type="time"
-          value={dropOffTime}
-          onChange={(e) => setDropOffTime(e.target.value)}
-          className="w-full mt-2"
-        />
       </div>
     </div>
   );
