@@ -44,11 +44,7 @@ const Sidebar = () => {
                 id={option.label}
                 checked={selectedTypes.includes(option.label)}
                 onChange={() =>
-                  handleCheckboxChange(
-                    option.label,
-                    selectedTypes,
-                    setSelectedTypes
-                  )
+                  handleCheckboxChange(option.label, selectedTypes, setSelectedTypes)
                 }
                 className="mr-3 w-5 h-5 accent-blue-500"
               />
@@ -83,11 +79,7 @@ const Sidebar = () => {
                 id={option.label}
                 checked={selectedCapacity.includes(option.label)}
                 onChange={() =>
-                  handleCheckboxChange(
-                    option.label,
-                    selectedCapacity,
-                    setSelectedCapacity
-                  )
+                  handleCheckboxChange(option.label, selectedCapacity, setSelectedCapacity)
                 }
                 className="mr-3 w-5 h-5 accent-blue-500"
               />
@@ -113,13 +105,13 @@ const Sidebar = () => {
           type="range"
           min="0"
           max="150"
-          value={100}
+          value={priceRange} // Use priceRange state
           onChange={(e) => setPriceRange(Number(e.target.value))}
           className="w-full accent-blue-500"
         />
         <div className="flex justify-between items-center mb-4">
           <span className="space-y-4 text-xl font-semibold text-gray-500">
-            Max. ${100}.00
+            Max. ${priceRange}.00 {/* Display dynamic price range */}
           </span>
         </div>
       </div>
